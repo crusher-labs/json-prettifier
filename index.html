@@ -1,293 +1,173 @@
 <!DOCTYPE html>
-<html lang="en"
-      data-default-theme="minimal"
-      data-theme-lock="minimal"
-      data-default-mode="dark"
-      data-default-brand="#0ea5e9">
+<html lang="en" data-world="green-bar-printout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON Prettifier/Minifier</title>
+    <title>JSON Formatter and Minifier - Free, Private, In Your Browser</title>
     <!-- SEO-META-START -->
-    <meta name="description" content="Format, validate, minify, and beautify JSON instantly.">
-    <meta name="theme-color" content="#0ea5e9">
+    <meta name="description" content="Format, validate and minify JSON as you type, printed on green-bar paper. Sort keys, spot the exact column of an error, copy the result. Free, no upload, nothing leaves your browser.">
+    <meta name="theme-color" content="#d5e3cc">
     <link rel="canonical" href="https://crusher-labs.github.io/json-prettifier/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Web Utility Tools by CRUSHER">
-    <meta property="og:title" content="JSON Prettifier/Minifier — Web Utility Tools by CRUSHER">
-    <meta property="og:description" content="Format, validate, minify, and beautify JSON instantly.">
+    <meta property="og:title" content="JSON Formatter and Minifier - Web Utility Tools by CRUSHER">
+    <meta property="og:description" content="Format, validate and minify JSON as you type, printed on green-bar paper. Sort keys, spot the exact column of an error, copy the result. Free, no upload, nothing leaves your browser.">
     <meta property="og:url" content="https://crusher-labs.github.io/json-prettifier/">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="JSON Prettifier/Minifier — Web Utility Tools by CRUSHER">
-    <meta name="twitter:description" content="Format, validate, minify, and beautify JSON instantly.">
+    <meta name="twitter:title" content="JSON Formatter and Minifier - Web Utility Tools by CRUSHER">
+    <meta name="twitter:description" content="Format, validate and minify JSON as you type, printed on green-bar paper. Sort keys, spot the exact column of an error, copy the result. Free, no upload, nothing leaves your browser.">
     <!-- SEO-META-END -->
     <link rel="icon" href="data:,">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://unpkg.com https://api.web3forms.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.web3forms.com; object-src 'none'; base-uri 'self';">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/crusher-ui-kit@1.2.1/dist/crusher-ui.min.css" integrity="sha384-Y8s5q9n5rodpO7nSyRNxbxlns7zYnuOEymBbSwEg9GmW2R/Zt3U4BWOZLb3q2NjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/crusher-ui-kit@1.2.1/dist/themes/minimal.css" integrity="sha384-FLhZ0Qhy8nUbGu4oSm0Vs5uPCL1RgZn+Ld2/fj3PrYDUMqltf2vObwpWHiOzRx4l" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/crusher-ui-kit@1.2.1/dist/static/tool-shell.css" integrity="sha384-mWfiqr7mGlAa+yVw+7vt40gfFTtAhs2jjBYbTLTvNRYUtZEtAJ0YPHlTdB8kuhSE" crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/crusher-ui-kit@1.2.1/dist/static/tool-shell.js" integrity="sha384-gNDnPKn5AoF0e4Q555fGbM+snO+UCP3/z4ErG3cyS/Akusg/bzTO+AYmG1WAMnab" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Public+Sans:wght@400;600&display=swap">
     <style>
-        body {
-        font-family: 'Inter', sans-serif;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-    /* === Premium polish (2026-05-14) === */
-    body { position: relative; isolation: isolate; }
-    body::before {
-        content: '';
-        position: fixed;
-        inset: 0 0 auto 0;
-        block-size: 32rem;
-        background:
-            radial-gradient(ellipse 70% 50% at 50% -5%,
-                color-mix(in srgb, var(--crusher-color-brand-primary) 18%, transparent),
-                transparent 65%);
-        pointer-events: none;
-        z-index: -1;
-        opacity: 0.85;
-    }
-    ::selection { background: color-mix(in srgb, var(--crusher-color-brand-primary) 30%, transparent); }
-        /* PREMIUM-INPUT-START (until framework-feedback Section 6 ships) */
-        .crusher-tool-control {
-            background: color-mix(in srgb, var(--crusher-background-surface) 72%, transparent);
-            -webkit-backdrop-filter: blur(8px);
-            backdrop-filter: blur(8px);
-            border: 1px solid color-mix(in srgb, var(--crusher-border-primary) 70%, transparent);
-            color: var(--crusher-text-primary);
-            padding: var(--crusher-spacing-3) var(--crusher-spacing-4);
-            border-radius: var(--crusher-radius-lg);
-            font-family: inherit;
-            font-size: 0.9375rem;
-            line-height: 1.5;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-        }
-        .crusher-tool-control:hover { border-color: var(--crusher-border-primary); }
-        .crusher-tool-control:focus-visible {
-            border-color: var(--crusher-color-brand-primary);
-            box-shadow: 0 0 0 4px color-mix(in srgb, var(--crusher-color-brand-primary) 18%, transparent);
-            outline: none;
-            background: var(--crusher-background-surface);
-        }
-        .crusher-tool-control::placeholder {
-            color: var(--crusher-text-secondary);
-            opacity: 0.7;
-        }
-        .crusher-tool-control:focus::placeholder { opacity: 0.4; }
-        textarea.crusher-tool-control { resize: vertical; min-block-size: 4.5rem; }
-        /* PREMIUM-INPUT-END */
-    .crusher-tool-title {
-        font-family: 'Fraunces', 'Georgia', serif;
-        font-optical-sizing: auto;
-        font-variation-settings: 'opsz' 48, 'SOFT' 30;
-        font-weight: 500;
-        font-style: normal;
-        font-size: clamp(2rem, 4.5vw, 3rem);
-        line-height: 1.05;
-        letter-spacing: -0.025em;
-    }
-    .crusher-tool-action {
-        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    }
-    .crusher-tool-action:hover:not([disabled]) {
-        transform: translateY(-1px);
-        box-shadow: 0 8px 20px -8px color-mix(in srgb, var(--crusher-color-brand-primary) 35%, transparent);
-    }
-        .tool-mono { font-family: 'JetBrains Mono', monospace; }
 
-        .tool-stack { display: grid; gap: var(--crusher-spacing-4); max-width: 42rem; margin-inline: auto; }
-        .tool-section { padding: var(--crusher-spacing-6); display: grid; gap: var(--crusher-spacing-4); }
-        .tool-label { display: block; margin-bottom: var(--crusher-spacing-1); font-size: var(--crusher-font-size-sm); color: var(--crusher-text-secondary); }
-        .tool-action-row { display: flex; justify-content: center; gap: var(--crusher-spacing-4); }
-        .tool-action { padding-inline: var(--crusher-spacing-6); padding-block: var(--crusher-spacing-2); border-radius: var(--crusher-radius-full); font-weight: 600; }
-        textarea.crusher-tool-control { padding: var(--crusher-spacing-3); font-size: var(--crusher-font-size-sm); }
+    :root { --paper:#f4f1e3; --bar:#d5e3cc; --ink:#1e2a20; --ink-soft:#3b4a3e; --faded:#7d8a7f; --ribbon:#b3261e; --key:#7a4f1d; --num:#1f4e79; --hole:#c9c2ae; --tractor:44px; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--ink); font-family:'Share Tech Mono', ui-monospace, monospace;
+      background-color:var(--paper);
+      background-image:
+        repeating-linear-gradient(180deg, transparent 0 1055px, #b9b3a0 1055px 1056px),
+        repeating-linear-gradient(180deg, var(--paper) 0 48px, var(--bar) 48px 96px);
+    }
+    .tractor { position:fixed; top:0; bottom:0; width:var(--tractor); background-color:var(--paper); background-image:radial-gradient(circle at 50% 50%, var(--hole) 6px, transparent 7px); background-size:var(--tractor) 47px; z-index:3; }
+    .tractor.l { left:0; border-right:1px dashed #c7c1ad; } .tractor.r { right:0; border-left:1px dashed #c7c1ad; }
+    .content { position:relative; z-index:2; padding:40px calc(var(--tractor) + 52px) 60px; max-width:1440px; margin:0 auto; }
+    .jobline, .ruler { white-space:pre; overflow:hidden; letter-spacing:.06em; }
+    .jobline { font-size:12.5px; text-transform:uppercase; color:var(--ink-soft); }
+    .ruler { font-size:11.5px; color:var(--faded); margin:4px 0 26px; }
+    h1 { margin:0 0 8px; font-weight:400; font-size:clamp(30px, 4.2vw, 52px); letter-spacing:.06em; text-transform:uppercase; line-height:1.05; }
+    .lede { margin:0 0 30px; font-family:'Public Sans', system-ui, sans-serif; font-size:16px; line-height:1.5; color:#4a5a4d; max-width:640px; }
+    .grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:26px; }
+    .box { border:2px solid var(--ink); padding:14px 18px; background:rgba(255,255,255,0.35); position:relative; }
+    .box .tag { position:absolute; top:-11px; left:14px; background:var(--paper); padding:0 8px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); }
+    textarea.in { width:100%; min-height:260px; border:none; background:transparent; resize:vertical; font:15px/1.6 'Share Tech Mono', monospace; color:var(--ink); outline:none; }
+    .out { min-height:260px; font-size:15px; line-height:1.6; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .out .ln { display:block; animation:print .18s steps(2) both; }
+    @keyframes print { from { opacity:0; transform:translateY(-2px); } to { opacity:1; transform:none; } }
+    .k { color:var(--key); } .n { color:var(--num); } .p { color:var(--ribbon); } .err { color:var(--ribbon); }
+    .panel { display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin:24px 0; }
+    .sw { display:inline-flex; align-items:center; gap:8px; padding:9px 14px; border:2px solid var(--ink); background:#e9e6d6; color:var(--ink); font:12.5px 'Share Tech Mono', monospace; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; box-shadow:2px 2px 0 var(--ink); }
+    .sw i { width:9px; height:9px; border-radius:50%; background:#8a9a8c; box-shadow:inset 0 1px 1px rgba(0,0,0,0.4); }
+    .sw[aria-pressed="true"] { background:var(--ink); color:var(--paper); }
+    .sw[aria-pressed="true"] i { background:#5cff8f; box-shadow:0 0 6px #5cff8f; }
+    .tear { margin-left:auto; padding:10px 16px; border:2px dashed var(--ribbon); color:var(--ribbon); background:transparent; font:12.5px 'Share Tech Mono', monospace; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; }
+    .status { font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-top:10px; }
+    .memo { margin-top:46px; background:#fffdf7; color:#242424; font-family:'Public Sans', system-ui, sans-serif; padding:28px 32px; max-width:760px; box-shadow:0 10px 30px -18px rgba(0,0,0,0.5); position:relative; transform:rotate(-0.4deg); }
+    .memo::before { content:''; position:absolute; top:-14px; left:30px; width:34px; height:52px; border:3px solid var(--faded); border-radius:14px 14px 12px 12px; border-bottom-color:transparent; }
+    .memo h2 { margin:0 0 10px; font:600 24px 'Public Sans', sans-serif; letter-spacing:-.01em; }
+    .memo p { margin:0 0 10px; font-size:14.5px; line-height:1.6; color:#4a4a4a; }
+    .memo details { border-top:1px solid #e4dfd0; } .memo summary { cursor:pointer; padding:10px 0; font-weight:600; font-size:14px; }
+    .memo a { color:var(--num); }
+    .foot { margin-top:26px; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--faded); display:flex; flex-wrap:wrap; gap:8px 24px; align-items:center; }
+    .foot a { color:var(--ink-soft); }
+    .tool-feedback { font-family:'Public Sans', system-ui, sans-serif; font-size:13px; color:var(--ink-soft); margin-top:18px; }
+    .tool-feedback summary::before { color:var(--ribbon); }
+    @media (max-width: 900px) { .grid { grid-template-columns:1fr; } }
+    @media (max-width: 640px) { :root { --tractor:22px; } .content { padding:26px calc(var(--tractor) + 14px) 40px; } .jobline { font-size:10px; } .ruler { font-size:9px; } textarea.in, .out { min-height:150px; font-size:13px; } .memo { padding:20px 18px; transform:none; } .tear { margin-left:0; } }
 
-        .tool-feedback {
-            width: min(100%, 56rem);
-            margin: var(--crusher-spacing-8) auto var(--crusher-spacing-6);
-            padding-inline: var(--crusher-spacing-4);
-        }
-        .tool-feedback-trigger {
-            cursor: pointer;
-            padding: var(--crusher-spacing-2) var(--crusher-spacing-3);
-            font-size: var(--crusher-font-size-sm);
-            color: var(--crusher-text-secondary);
-            border-radius: var(--crusher-radius-md);
-            list-style: none;
-            display: inline-flex;
-            align-items: center;
-            gap: var(--crusher-spacing-2);
-            transition: color var(--crusher-motion-duration-fast) var(--crusher-motion-easing-standard);
-        }
-        .tool-feedback-trigger::-webkit-details-marker { display: none; }
-        .tool-feedback-trigger::before {
-            content: '+';
-            display: inline-block;
-            font-weight: 700;
-            color: var(--crusher-color-brand-primary);
-        }
-        .tool-feedback-details[open] .tool-feedback-trigger::before { content: '−'; }
-        .tool-feedback-trigger:hover { color: var(--crusher-color-brand-primary); }
-        .tool-feedback-form {
-            margin-top: var(--crusher-spacing-3);
-            padding: var(--crusher-spacing-4);
-            border: 1px solid var(--crusher-border-primary);
-            border-radius: var(--crusher-radius-lg);
-            background: var(--crusher-background-surface);
-            display: grid;
-            gap: var(--crusher-spacing-3);
-        }
-        .tool-feedback-field { display: grid; gap: var(--crusher-spacing-1); }
-        .tool-feedback-field > span {
-            font-size: var(--crusher-font-size-xs);
-            color: var(--crusher-text-secondary);
-            font-weight: 500;
-        }
-        .tool-feedback-submit {
-            padding-inline: var(--crusher-spacing-4);
-            padding-block: var(--crusher-spacing-2);
-        }
-        .tool-feedback-submit[disabled] { opacity: 0.6; cursor: not-allowed; }
-        .tool-feedback-status {
-            margin: 0;
-            min-block-size: 1.25rem;
-            font-size: var(--crusher-font-size-sm);
-            color: var(--crusher-text-secondary);
-        }
-        .tool-feedback-status[data-kind="ok"] { color: var(--crusher-color-brand-primary); }
-        .tool-feedback-status[data-kind="error"] { color: #dc2626; }
-        .tool-feedback-honey { position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none; }
+    .tool-feedback summary { cursor:pointer; list-style:none; display:inline-flex; gap:8px; align-items:center; }
+    .tool-feedback summary::-webkit-details-marker { display:none; }
+    .tool-feedback summary::before { content:'+'; font-weight:700; }
+    .tool-feedback[open] summary::before { content:'\2212'; }
+    .tool-feedback form { display:grid; gap:10px; margin-top:12px; max-width:520px; }
+    .tool-feedback label { display:grid; gap:4px; font-size:12px; }
+    .tool-feedback textarea, .tool-feedback input[type="email"] { font:14px/1.5 inherit; padding:9px 11px; border:1px solid currentColor; background:transparent; color:inherit; border-radius:4px; }
+    .tool-feedback button { justify-self:start; padding:8px 16px; font:600 13px inherit; cursor:pointer; border:1px solid currentColor; background:transparent; color:inherit; border-radius:4px; }
+    .tool-feedback-honey { position:absolute; left:-9999px; top:-9999px; opacity:0; pointer-events:none; }
+    #tool-feedback-status { margin:0; min-height:1.2em; font-size:13px; }
+    #tool-feedback-status[data-kind="error"] { color:#c0392b; }
     </style>
 </head>
-<body class="crusher-tool-page">
+<body>
 
-    <main class="crusher-tool-shell">
-        <header class="crusher-tool-header">
-            <h1 class="crusher-tool-title">JSON Prettifier/Minifier</h1>
-            <p class="crusher-tool-lede">Format or compress JSON data.</p>
-        </header>
-
-        <div class="tool-stack">
-            <section class="crusher-tool-surface tool-section">
-                <div>
-                    <label for="input" class="tool-label">Input JSON</label>
-                    <textarea id="input" rows="6" class="crusher-tool-control tool-mono" placeholder='{"key": "value"}'></textarea>
-                </div>
-                <div class="tool-action-row">
-                    <button id="prettify-btn" type="button" class="crusher-tool-action tool-action">Prettify</button>
-                    <button id="minify-btn" type="button" class="crusher-tool-action tool-action">Minify</button>
-                </div>
-                <div>
-                    <label for="output" class="tool-label">Output</label>
-                    <textarea id="output" rows="6" readonly class="crusher-tool-control tool-mono"></textarea>
-                </div>
-            </section>
-        </div>
+    <div class="tractor l" aria-hidden="true"></div><div class="tractor r" aria-hidden="true"></div>
+    <main class="content">
+      <div class="jobline">JOB 0042   JSON FORMATTER   LINE PRINTER 02   PAGE 001                                     CRUSHER-LABS TOOLS</div>
+      <div class="ruler">----+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8----+----9----+----0----+----1----+----2----+----3</div>
+      <h1>JSON Formatter</h1>
+      <p class="lede">Paste JSON in the input box. It prints formatted, line by line, on the green bar. Errors print in ribbon red. Nothing leaves your browser.</p>
+      <div class="grid">
+        <div class="box"><span class="tag">Input · type or paste</span><textarea id="json-in" class="in" spellcheck="false" aria-label="JSON input">{"name":"crusher","tools":37,"free":true,"tags":["static","private"],"pins":{"kit":"none"}}</textarea></div>
+        <div class="box"><span class="tag">Output · printed</span><div id="json-out" class="out" aria-live="polite"></div></div>
+      </div>
+      <div class="panel">
+        <button class="sw json-mode" data-m="pretty" aria-pressed="true"><i></i>Pretty</button>
+        <button class="sw json-mode" data-m="min" aria-pressed="false"><i></i>Minify</button>
+        <button id="json-sort" class="sw" aria-pressed="false"><i></i>Sort keys</button>
+        <button id="json-copy" class="tear">Tear off · copy output</button>
+      </div>
+      <div id="json-hint" class="status"></div>
+      <section class="memo">
+        <h2>Format, validate and minify JSON</h2>
+        <p>Paste any JSON and it prints formatted with two-space indentation and syntax coloring. Invalid input prints the parser's message and, where the browser reports it, the position it failed at, so a missing comma is a one-second fix. Minify collapses everything to a single line for configs and API payloads; Sort keys orders every object alphabetically, recursively.</p>
+        <p>Everything runs in your browser. Large payloads never leave the tab, which makes this safe for real API responses.</p>
+        <details><summary>What about JSON with comments?</summary><p>Strict JSON has no comments. Lines starting with // are stripped before parsing so that config files still format.</p></details>
+        <details><summary>Can it handle big files?</summary><p>Yes. It is your machine doing the work; several megabytes format in well under a second.</p></details>
+        <details><summary>Why green-bar paper?</summary><p>Because formatted output is a printout, and line-printer paper is the most readable thing ever designed for long structured text: the half-inch bars keep your eye on the line.</p></details>
+      </section>
+      <div class="foot"><span>End of job 0042 · lines printed: <span id="json-lines">0</span></span><a href="https://tools.muhammadhassaanjaved.com/">All tools</a></div>
+      <details class="tool-feedback ">
+      <summary>Suggest an improvement</summary>
+      <form id="tool-feedback-form" novalidate>
+        <label><span>What could be better?</span><textarea name="improvement" rows="3" required maxlength="2000" placeholder="Tell me what is missing or what could work better"></textarea></label>
+        <label><span>Your email (optional, only if you want a reply)</span><input type="email" name="replyto" maxlength="200" placeholder="your@email.com"></label>
+        <input type="text" name="botcheck" class="tool-feedback-honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button type="submit">Send</button>
+        <p id="tool-feedback-status" role="status" aria-live="polite"></p>
+      </form>
+    </details>
     </main>
-
-    <a href="https://tools.muhammadhassaanjaved.com/" id="hub-bubble" class="crusher-tool-fab" title="View All Tools" target="_blank" rel="noopener noreferrer">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="3" width="7" height="7"></rect>
-            <rect x="14" y="3" width="7" height="7"></rect>
-            <rect x="14" y="14" width="7" height="7"></rect>
-            <rect x="3" y="14" width="7" height="7"></rect>
-        </svg>
-    </a>
-
-    <crusher-style-switcher
-      default-theme="minimal"
-      default-brand="#0ea5e9"
-      hide-themes
-      hide-theme-color>
-        <svg slot="mode-light-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"/></svg>
-        <svg slot="mode-dark-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"/></svg>
-    </crusher-style-switcher>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/crusher-ui-kit@1.2.1/dist/crusher-ui.standalone.esm.js" integrity="sha384-49DxFeXn1ckPw9AmqDudkw1VT513Id+j1qJmkXCZBAiIaNechVSDTNnsKThtI54K" crossorigin="anonymous"></script>
-
     <script>
-        const input = document.getElementById('input');
-        const output = document.getElementById('output');
 
-        document.getElementById('prettify-btn').addEventListener('click', () => {
-            try {
-                const obj = JSON.parse(input.value);
-                output.value = JSON.stringify(obj, null, 2);
-            } catch (e) { output.value = 'Invalid JSON'; }
-        });
+const h = (tag, style, text, cls) => { const e = document.createElement(tag); if (style) e.style.cssText = style; if (text != null) e.textContent = text; if (cls) e.className = cls; return e; };
+const copyBtn = (btn, getText, label, done) => btn.addEventListener('click', async () => { try { await navigator.clipboard.writeText(getText()); btn.textContent = done || 'Copied'; } catch (e) { btn.textContent = 'Select to copy'; } setTimeout(() => { btn.textContent = label; }, 1400); });
 
-        document.getElementById('minify-btn').addEventListener('click', () => {
-            try {
-                const obj = JSON.parse(input.value);
-                output.value = JSON.stringify(obj);
-            } catch (e) { output.value = 'Invalid JSON'; }
-        });
+
+    const inp = document.getElementById('json-in'), out = document.getElementById('json-out'), hint = document.getElementById('json-hint'), sortBtn = document.getElementById('json-sort'), lines = document.getElementById('json-lines');
+    let mode = 'pretty', sort = false;
+    const sortKeys = v => Array.isArray(v) ? v.map(sortKeys) : (v && typeof v === 'object') ? Object.keys(v).sort().reduce((o, k) => (o[k] = sortKeys(v[k]), o), {}) : v;
+    const paintLine = (el, s) => { let last = 0; for (const m of s.matchAll(/("(?:[^"\\]|\\.)*")(\s*:)?|\b(true|false|null)\b|(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)|([{}\[\]])/g)) { if (m.index > last) el.appendChild(document.createTextNode(s.slice(last, m.index))); if (m[1]) { el.appendChild(h('span', null, m[1], m[2] ? 'k' : '')); if (m[2]) el.appendChild(document.createTextNode(m[2])); } else if (m[3] || m[4]) el.appendChild(h('span', null, m[0], 'n')); else el.appendChild(h('span', null, m[5], 'p')); last = m.index + m[0].length; } if (last < s.length) el.appendChild(document.createTextNode(s.slice(last))); };
+    const render = () => {
+      const raw = inp.value.replace(/^\s*\/\/.*$/gm, ''); out.textContent = '';
+      if (!raw.trim()) { hint.textContent = 'Awaiting input'; lines.textContent = '0'; return; }
+      try { let v = JSON.parse(raw); if (sort) v = sortKeys(v); const s = mode === 'pretty' ? JSON.stringify(v, null, 2) : JSON.stringify(v); const ls = s.split('\n'); ls.forEach((l, i) => { const el = h('span', 'animation-delay:' + Math.min(i, 60) * 22 + 'ms', null, 'ln'); paintLine(el, l); out.appendChild(el); }); hint.textContent = 'Valid · ' + s.length + ' chars · ' + ls.length + ' lines'; lines.textContent = String(ls.length); }
+      catch (e) { const m = (e.message.match(/position (\d+)/) || [])[1]; out.appendChild(h('span', null, '*** ERROR' + (m ? ' AT CHAR ' + m : '') + ': ' + e.message.toUpperCase() + ' ***', 'ln err')); hint.textContent = 'Invalid JSON'; lines.textContent = '1'; }
+    };
+    inp.addEventListener('input', render);
+    document.querySelectorAll('.json-mode').forEach(b => b.addEventListener('click', () => { mode = b.dataset.m; document.querySelectorAll('.json-mode').forEach(x => x.setAttribute('aria-pressed', String(x === b))); render(); }));
+    sortBtn.addEventListener('click', () => { sort = !sort; sortBtn.setAttribute('aria-pressed', String(sort)); render(); });
+    copyBtn(document.getElementById('json-copy'), () => out.textContent, 'Tear off · copy output', 'Torn off · copied');
+    render();
+
+(function() {
+  const KEY = '30e570c5-aeeb-439d-8a8a-bd2516a5dc5d';
+  const ENDPOINT = 'https://api.web3forms.com/submit';
+  const form = document.getElementById('tool-feedback-form');
+  const status = document.getElementById('tool-feedback-status');
+  if (!form || !status) return;
+  const toolName = (document.title || 'tool').trim();
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    fd.set('access_key', KEY);
+    fd.set('subject', '[' + toolName + '] Improvement suggestion');
+    fd.set('from_name', toolName);
+    const btn = form.querySelector('button[type="submit"]');
+    const orig = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Sending';
+    status.textContent = ''; delete status.dataset.kind;
+    try {
+      const res = await fetch(ENDPOINT, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } });
+      const data = await res.json();
+      if (data.success) { form.reset(); status.textContent = 'Thanks, your suggestion is in.'; status.dataset.kind = 'ok'; }
+      else { status.textContent = data.message || 'Sorry, that did not go through. Try again later?'; status.dataset.kind = 'error'; }
+    } catch (err) { status.textContent = 'Network error. Try again?'; status.dataset.kind = 'error'; }
+    finally { btn.disabled = false; btn.textContent = orig; }
+  });
+})();
     </script>
-
-    <section class="tool-feedback" aria-label="Tool feedback">
-        <details class="tool-feedback-details">
-            <summary class="tool-feedback-trigger">Suggest an improvement</summary>
-            <form id="tool-feedback-form" class="tool-feedback-form" novalidate>
-                <label class="tool-feedback-field">
-                    <span>What could be better?</span>
-                    <textarea name="improvement" rows="3" required maxlength="2000" class="crusher-tool-control" placeholder="Tell me what's missing or what could work better…"></textarea>
-                </label>
-                <label class="tool-feedback-field">
-                    <span>Your email (optional, only if you want a reply)</span>
-                    <input type="email" name="replyto" maxlength="200" class="crusher-tool-control" placeholder="your@email.com">
-                </label>
-                <input type="text" name="botcheck" class="tool-feedback-honey" tabindex="-1" autocomplete="off" aria-hidden="true">
-                <div>
-                    <button type="submit" class="crusher-tool-action tool-feedback-submit">Send</button>
-                </div>
-                <p id="tool-feedback-status" class="tool-feedback-status" role="status" aria-live="polite"></p>
-            </form>
-        </details>
-    </section>
-
-    <script>
-        (function() {
-            const KEY = '30e570c5-aeeb-439d-8a8a-bd2516a5dc5d';
-            const ENDPOINT = 'https://api.web3forms.com/submit';
-            const form = document.getElementById('tool-feedback-form');
-            const status = document.getElementById('tool-feedback-status');
-            if (!form || !status) return;
-            const toolName = (document.title || 'tool').trim();
-            const subject = '[' + toolName + '] Improvement suggestion';
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const fd = new FormData(form);
-                fd.set('access_key', KEY);
-                fd.set('subject', subject);
-                fd.set('from_name', toolName);
-                const btn = form.querySelector('button[type="submit"]');
-                const orig = btn.textContent;
-                btn.disabled = true; btn.textContent = 'Sending…';
-                status.textContent = ''; delete status.dataset.kind;
-                try {
-                    const res = await fetch(ENDPOINT, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } });
-                    const data = await res.json();
-                    if (data.success) {
-                        form.reset();
-                        status.textContent = 'Thanks — your suggestion is in.';
-                        status.dataset.kind = 'ok';
-                    } else {
-                        status.textContent = data.message || 'Sorry, that did not go through. Try again later?';
-                        status.dataset.kind = 'error';
-                    }
-                } catch (err) {
-                    status.textContent = 'Network error. Try again?';
-                    status.dataset.kind = 'error';
-                } finally {
-                    btn.disabled = false; btn.textContent = orig;
-                }
-            });
-        })();
-    </script>
-
 </body>
 </html>
